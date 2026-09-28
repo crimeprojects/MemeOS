@@ -77,7 +77,7 @@
 <div class="toast" id="toast"></div>
 <script>
 const toast=document.getElementById('toast');let timer;function showToast(text){toast.textContent=text;toast.classList.add('show');clearTimeout(timer);timer=setTimeout(()=>toast.classList.remove('show'),2600)}
-document.getElementById('refreshBtn').addEventListener('click',()=>{const s=document.getElementById('syncStatus');s.textContent='Refreshing local data…';showToast('Refresh queued — Notion sync stays read-only in this prototype');setTimeout(()=>{s.textContent='Local data synced';showToast('Dashboard refreshed');},900)})
+document.getElementById('refreshBtn').addEventListener('click',()=>{const s=document.getElementById('syncStatus');s.textContent='Refreshing local data…';showToast('Reading local trade data');setTimeout(()=>{hydrateFromLocal();clearStaleIfEmpty();loadTradeRows();s.textContent='Local data live';showToast('Dashboard refreshed');},250)})
 document.getElementById('askBtn').addEventListener('click',()=>showToast('Coach prompt: “What should I review first?”'))
 document.getElementById('openQueue').addEventListener('click',()=>showToast('Trading Log would open here'))
 document.getElementById('dateBtn').addEventListener('click',()=>showToast('Date filter: Last 7 days'))
