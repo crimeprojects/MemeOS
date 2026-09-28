@@ -1,0 +1,42 @@
+.DS_Store
+
+# Local data and generated artifacts
+data/*
+!data/.gitkeep
+*.sqlite3
+*.sqlite
+*.db
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+
+# Local Obsidian / journal content
+vault/*
+!vault/.gitkeep
+
+# Private product notes and handoffs
+docs/PRD.md
+docs/HANDOFF.md
+docs/REAL_DASHBOARD_PLAN.md
+
+# Secrets and machine-specific configuration
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!.config.example
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# OS/editor
+.DS_Store
+.idea/
+.vscode/
