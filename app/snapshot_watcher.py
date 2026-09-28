@@ -67,12 +67,13 @@ class SnapshotWatcher:
         if not new_files:
             return {"new_snapshots": 0, "api_pulls": 0, "new_activities": 0}
 
-        for path in new_files:
-            self.manager.ingest(path)
-
+        # Pull before registering the files so a transient GMGN failure leaves
+        # the PNG eligible for retry on the next loop.
         # One wallet pull serves the whole newly detected batch. Raw activity is
         # deduplicated by SQLite; no AI or Notion call occurs here.
         activities = self.fetcher(self.wallet, self.chain, self.limit, self.max_pages)
+        for path in new_files:
+            self.manager.ingest(path)
         inserted = self.store.save_activities(activities)
         return {"new_snapshots": len(new_files), "api_pulls": 1, "new_activities": inserted}
 
@@ -91,7 +92,7 @@ class SnapshotWatcher:
                 return
             except Exception as exc:  # keep the watcher alive after transient API errors
                 print(f"Watcher error: {exc}")
-                time.sleep(max(interval, 10.0))
+                time.sleep(max(interval, 60.0))
 
 
 def main() -> int:
